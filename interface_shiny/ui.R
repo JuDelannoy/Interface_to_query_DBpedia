@@ -50,7 +50,10 @@ ui <- dashboardPage(
                   title = "Résultats",
                   sliderInput("slider", "Nombre de résultats:", min=0, max=1000, value=100,step = 50)
                 )
-              ),
+              ),              
+              fluidRow(
+                #new row : on affiche plot1
+                dataTableOutput("query")),
               fluidRow(
                 #new row : on affiche plot1
                 dataTableOutput("table"))

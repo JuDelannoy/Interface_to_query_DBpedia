@@ -8,7 +8,10 @@ server <- function(input, output) {
            "Person" = selectInput("typeB","Type précis du sujet:",sub_categories$Person),
            "Place" = selectInput("typeB","Type précis du sujet:",sub_categories$Place),
            "Work" = selectInput("typeB","Type précis du sujet:",sub_categories$Work),
-           selectInput("typeB","Type précis du sujet:",c("No subcategory")))
+           "FictionalCharacter"= selectInput("typeB","Type précis du sujet:",c(sub_categories$FictionalCharacter)),
+           "Event"= selectInput("typeB","Type précis du sujet:",c(sub_categories$Event)),
+           "CelestialBody"= selectInput("typeB","Type précis du sujet:",c(sub_categories$CelestialBody)),
+           "Species" = selectInput("typeB","Type précis du sujet:",c(sub_categories$Species)))
     
   })
   
@@ -16,8 +19,13 @@ server <- function(input, output) {
   
   output$table <- renderDataTable(query_DBpedia(typeA = input$typeA,
                                                 typeAprec=input$typeB,
+                                                namesubject=input$nameSubject,
                                                 nbresults=input$slider))
   
+  output$query <- renderText(give_query(typeA = input$typeA,
+                                        typeAprec=input$typeB,
+                                        namesubject=input$nameSubject,
+                                        nbresults=input$slider))
   #output$typeA_prec <- typeA_prec
   
   #output$table <- renderDataTable(affiche_element(output$type_prec))

@@ -19,7 +19,7 @@ affiche_element <- function(input){
 
 #fonction qui interroge DBpedia
 #type A est le type en lien avec les categories (Person, Actvity, Organisation)
-query_DBpedia <- function(typeA,typeAprec="",nbresults){
+query_DBpedia <- function(typeA,typeAprec,namesubject,nbresults){
   #endpoints and prefix to link to DB and get ontologies
   endpoint <- "http://live.dbpedia.org/sparql"
   options <- NULL
@@ -33,16 +33,28 @@ query_DBpedia <- function(typeA,typeAprec="",nbresults){
   "
   
   #query
+  
+  #beginning of the query
   beg <- 'SELECT *
              WHERE {\n'
+  
+  #subject
+  #first type
   q <- paste('?x a dbo:',typeA,' .\n',sep="")
-  if (typeAprec!="No subcategory"){q <- paste(q,'?x a dbo:',typeAprec,' .\n',sep="")}
-
+  #precision about the type
+  if (typeAprec!="All"){q <- paste(q,'?x a dbo:',typeAprec,' .\n',sep="")}
+  #recuperation du label
+  q <- paste(q,'?x rdfs:label ?name .\n',sep="")
+  #link to wikipedia
+  q <- paste(q,'BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink)',sep="")
+  #name of the subject
+  if (namesubject!="optionnel" & namesubject!=""){
+  q <- paste(q,'BIND (CONTAINS(?name,"',namesubject,'") AS ?containsName)\n FILTER (?containsName = 1)\n',sep="")}
+  
+  
   all_query <- paste(beg,
             q,
-             '?x rdfs:label ?name .
-             BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink)
-             }
+            '}
             LIMIT ',nbresults,
              sep="")
   
@@ -55,4 +67,32 @@ query_DBpedia <- function(typeA,typeAprec="",nbresults){
   final_res <- as.data.frame(res)
   
   return(final_res)
+}
+
+
+
+
+give_query <- function(typeA,typeAprec,namesubject,nbresults){
+  beg <- 'SELECT *
+             WHERE {\n'
+  
+  #subject
+  #first type
+  q <- paste('?x a dbo:',typeA,' .\n',sep="")
+  #precision about the type
+  if (typeAprec!="All"){q <- paste(q,'?x a dbo:',typeAprec,' .\n',sep="")}
+  #name of the subject
+  if (namesubject!="optionnel" & namesubject!=""){
+    q <- paste(q,'BIND (CONTAINS(?name,"',namesubject,'") AS ?containsName)\n
+               FILTER (?containsName = 1)',sep="")}
+  
+  
+  all_query <- paste(beg,
+                     q,
+                     '?x rdfs:label ?name .
+                     BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink)
+  }
+                     LIMIT ',nbresults,
+                     sep="")
+  return(all_query)
 }
