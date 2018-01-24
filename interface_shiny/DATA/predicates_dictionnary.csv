@@ -1,0 +1,77 @@
+subtitle;original;direct;option
+birth place;dbo:birthPlace;TRUE;
+starred in;dbo:starring;FALSE;
+is author of;dbo:author;FALSE;
+type of place;dbo:type|dbp:status;TRUE;TRUE
+place, localisation;dbo:city|dbo:location|dbo:country|dbp:country;TRUE;
+coordinates;georss:point;TRUE;
+birth date;dbo:birthDate;TRUE;
+type of job;dct:description;TRUE;TRUE
+team;dbo:team;FALSE;TRUE
+term start;dbo:activeYearsStartDate|dbp:termStart|dbo:activeYearsStartYear;TRUE;TRUE
+term end;dbo:activeYearsEndDate|dbo:activeYearsEndYear;TRUE;
+party;dbo:party;TRUE;TRUE
+successor;dbo:predecessor;FALSE;
+predecessor;dbo:predecessor;TRUE;
+title;dbp:title;TRUE;
+greatest epoch;dbp:years;TRUE;
+population;dbo:populationTotal;TRUE;
+is birth Place of;dbo:birthPlace;FALSE;TRUE
+is Part of;dbo:isPartOf;TRUE;
+is the city of;dbo:city;FALSE;TRUE
+total area (km²);dbo:areaTotal;TRUE;
+gravity;dbp:gravity;TRUE;
+period;dbp:period;TRUE;
+radius;dbp:radius;TRUE;
+constellation;dbp:constell;TRUE;
+temperature;dbp:temperature;TRUE;TRUE
+absolute magnitude;dbp:absmagV;TRUE;
+apparent magnitude;dbp:appmagV;TRUE;
+family;dbo:family;TRUE;
+author;dbo:author;TRUE;
+release date;dbp:date|dbp:year|dbo:releaseDate|dbp:recorded;TRUE;TRUE
+owner;dbp:owner;TRUE;TRUE
+country;dbo:country|dbp:country;TRUE;
+writer;dbo:writer|dbo:artist;TRUE;TRUE
+language;dbp:language;TRUE;
+director;dbo:director;TRUE;
+starring;dbo:starring|dbp:animator;TRUE;
+producer;dbo:producer;TRUE;
+record label;dbo:recordLabel;TRUE;TRUE
+album;dbo:album;TRUE;
+style, genre;dbo:genre;TRUE;
+publisher;dbo:publisher;TRUE;
+nationality;dbo:citizenship|dbp:nationality;TRUE;
+spouse;dbo:spouse;TRUE;
+children;dbo:child;TRUE;
+parents;dbo:child;FALSE;
+death place;dbo:deathPlace|dbp:deathPlace;TRUE;
+death date;dbp:deathDate;TRUE;
+birth name;dbp:birthName;TRUE;
+has influenced;dbo:influencedBy;TRUE;
+was influenced by;dbo:influencedBy;FALSE;
+necessary skills;dbp:skills;TRUE;
+minimum number of players;dbp:players;TRUE;
+playing time for the game;dbp:playingTime;TRUE;
+game minimum age;dbp:ages;TRUE;
+part of random chance;dbp:randomChance;TRUE;
+game complexity;dbp:complexity;TRUE;
+contact between players;dbp:contact;TRUE;
+sport equipment needed;dbp:equipment;TRUE;
+playing region;dbp:region;TRUE;
+type of sport;dbp:type;TRUE;
+category of sport;dbo:category|dbp:category;TRUE;
+is the activity of;dbo:sport;FALSE;
+founding year;dbo:foundingYear;TRUE;
+chairman;dbo:chairman;TRUE;
+sport league;dbo:league;TRUE;
+is the team of;dbo:team;FALSE;
+manager;dbo:manager;TRUE;
+creator;dbo:creator;TRUE;
+place;dbo:place;TRUE;
+date;dbo:date|dbp:date;TRUE;
+city;dbo:city|dbo:hometown;TRUE;
+founded by;dbo:foundedBy;TRUE;
+type of organisation;dbo:type;TRUE;
+associated Band or Artist;dbo:associatedBand|dbo:associatedMusicalArtist;TRUE;
+members of the band;dbp:bandMembers|dbp:currentMembers;TRUE;

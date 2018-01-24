@@ -1,5 +1,9 @@
 
 
+
+
+
+
 ui <- dashboardPage(
   dashboardHeader(title = "Let's query Wikipedia !"),
   dashboardSidebar(
@@ -21,22 +25,15 @@ ui <- dashboardPage(
                               main_categories$type),
                   uiOutput("typeA_prec"),
                   textInput(inputId = "nameSubject", label = "Nom du sujet",
-                            value = "optionnel"),
-                  textInput(inputId = "titleSubject", label = "Précision sur le sujet",
                             value = "optionnel")
                 ),
                 box(
                   title = "Prédicat",
-                  selectInput("predicat",
-                              "Précision sur le sujet:",
-                              main_categories$type)
+                  uiOutput("uipredicat")
                 ),
                 box(
                   title = "Objet",
-                  selectInput("objet",
-                              "Précision sur le sujet  (optionnel):",
-                              main_categories$type),
-                  textInput(inputId = "nameObject", label = "Nom de l'objet",
+                  textInput(inputId = "nameObject", label = "Nom de l'objet (optionnel)",
                             value = "optionnel")
                 )),
               fluidRow(
@@ -50,13 +47,10 @@ ui <- dashboardPage(
                   title = "Résultats",
                   sliderInput("slider", "Nombre de résultats:", min=0, max=1000, value=100,step = 50)
                 )
-              ),              
+              ),
               fluidRow(
                 #new row : on affiche plot1
-                dataTableOutput("query")),
-              fluidRow(
-                #new row : on affiche plot1
-                dataTableOutput("table"))
+                withSpinner(dataTableOutput("table")))
       ),
       # Second tab content
       tabItem(tabName = "introduction",
