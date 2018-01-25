@@ -29,6 +29,7 @@ server <- function(input, output) {
                                                 typeAprec=input$typeB,
                                                 namesubject=input$nameSubject,
                                                 verb=input$predicat,
+                                                nameobject = input$nameObject,
                                                 nbresults=input$slider))
 
   

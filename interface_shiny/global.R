@@ -21,7 +21,7 @@ affiche_element <- function(input){
 
 #fonction qui interroge DBpedia
 #type A est le type en lien avec les categories (Person, Actvity, Organisation)
-query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nbresults){
+query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,nbresults){
   #endpoints and prefix to link to DB and get ontologies
   endpoint <- "http://live.dbpedia.org/sparql"
   options <- NULL
@@ -47,22 +47,31 @@ query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nbresults){
   if (typeAprec!="All"){q <- paste(q,'?x a dbo:',typeAprec,' .\n',sep="")}
   #recuperation du label
   q <- paste(q,'?x rdfs:label ?name .\n',sep="")
-  #predicate
+  #name of the subject
+  if (namesubject!="optionnel" & namesubject!=""){
+    q <- paste(q,'FILTER(CONTAINS(?name,"',namesubject,'")) .\n',sep="")}
   
+  #predicate
   if (verb!="no"){
     verbPosition <- which(verb == predicates_dictionnary$subtitle)
   if(predicates_dictionnary$direct[verbPosition]){
   q <- paste(q,'?x ',predicates_dictionnary$original[verbPosition],' ?z .\n',sep="")}
   else
     {q <- paste(q,'?z ',predicates_dictionnary$original[verbPosition],' ?x .\n',sep="")}
-  }
   
+  
+    #objet, si predicat, different de "no"
+    #si c'est une uri (et donc pas une date, ou une string), on récupère son label
+    q <- paste(q,'OPTIONAL{ ?z rdfs:label ?nameobjectURI .} \n',sep="")
+    q <- paste(q,'BIND( IF(isURI(?z),"",concat(?z," ")) as ?nameobjectOTH) . \n',sep="")
+    if (nameobject!="optionnel" & nameobject!=""){
+     q <- paste(q,'FILTER((CONTAINS(?nameobjectURI,"',nameobject,'")) || (CONTAINS(?nameobjectOTH,"',nameobject,'") )) . \n',sep="")}
+    }
+    
   #link to wikipedia
-  q <- paste(q,'BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink)\n',sep="")
-  #name of the subject
-  if (namesubject!="optionnel" & namesubject!=""){
-  q <- paste(q,'BIND (CONTAINS(?name,"',namesubject,'") AS ?containsName)\n FILTER (?containsName = 1)\n',sep="")}
-  
+  q <- paste(q,'BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink) .\n',sep="")
+
+
   all_query <- paste(beg,
             q,
             '}

@@ -5,7 +5,7 @@ is author of;dbo:author;FALSE;
 type of place;dbo:type|dbp:status;TRUE;TRUE
 place, localisation;dbo:city|dbo:location|dbo:country|dbp:country;TRUE;
 coordinates;georss:point;TRUE;
-birth date;dbo:birthDate;TRUE;
+birth date;dbp:birthDate|dbo:birthDate;TRUE;
 type of job;dct:description;TRUE;TRUE
 team;dbo:team;FALSE;TRUE
 term start;dbo:activeYearsStartDate|dbp:termStart|dbo:activeYearsStartYear;TRUE;TRUE
