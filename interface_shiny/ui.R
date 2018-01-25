@@ -39,9 +39,7 @@ ui <- dashboardPage(
               fluidRow(
                 box(
                   title = "Ordre",
-                  selectInput("order",
-                              "Ordonné par : ",
-                              c("Sujet","Objet"))
+                  uiOutput("uiorder")
                 ),
                 box(
                   title = "Résultats",

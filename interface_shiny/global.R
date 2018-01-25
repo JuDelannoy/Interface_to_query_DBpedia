@@ -4,6 +4,7 @@ library(shiny)
 library(shinydashboard)
 library(shinycssloaders)
 
+
 #read csv of categories
 main_categories <- read.csv("DATA/main_categories.csv", stringsAsFactors = FALSE,sep=";",header = FALSE)
 colnames(main_categories) <- c("type")
@@ -21,7 +22,7 @@ affiche_element <- function(input){
 
 #fonction qui interroge DBpedia
 #type A est le type en lien avec les categories (Person, Actvity, Organisation)
-query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,nbresults){
+query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,criteria_order,nbresults){
   #endpoints and prefix to link to DB and get ontologies
   endpoint <- "http://live.dbpedia.org/sparql"
   options <- NULL
@@ -33,6 +34,13 @@ query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,nbresults)
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   "
+  
+  if (criteria_order == typeA || criteria_order == "no"){
+    order = "?x"
+  }
+  else {
+    order = "?nameobject"
+  }
   
   #query
   
@@ -64,8 +72,9 @@ query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,nbresults)
     #si c'est une uri (et donc pas une date, ou une string), on récupère son label
     q <- paste(q,'OPTIONAL{ ?z rdfs:label ?nameobjectURI .} \n',sep="")
     q <- paste(q,'BIND( IF(isURI(?z),"",concat(?z," ")) as ?nameobjectOTH) . \n',sep="")
+    q <- paste(q,'BIND( IF(bound(?nameobjectURI),STR(?nameobjectURI),?nameobjectOTH) as ?nameobject) . \n',sep="")
     if (nameobject!="optionnel" & nameobject!=""){
-     q <- paste(q,'FILTER((CONTAINS(?nameobjectURI,"',nameobject,'")) || (CONTAINS(?nameobjectOTH,"',nameobject,'") )) . \n',sep="")}
+     q <- paste(q,'FILTER(CONTAINS(?nameobject,"',nameobject,'")) . \n',sep="")}
     }
     
   #link to wikipedia
@@ -75,7 +84,8 @@ query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,nbresults)
   all_query <- paste(beg,
             q,
             '}
-            LIMIT ',nbresults,
+            \nORDER BY',order,
+            '\nLIMIT ',nbresults,
              sep="")
   
   #afficher la requete en ligne de commande

@@ -25,12 +25,23 @@ server <- function(input, output) {
     
   output$uipredicat <- renderUI({predicat()})
   
+  
+  order <-  reactive({
+    selectInput("order",
+                "Ordonné par : ",
+                c(input$typeA,input$predicat))})
+  
+  output$uiorder <- renderUI({order()})
+  
+  
   output$table <- renderDataTable(query_DBpedia(typeA = input$typeA,
                                                 typeAprec=input$typeB,
                                                 namesubject=input$nameSubject,
                                                 verb=input$predicat,
                                                 nameobject = input$nameObject,
+                                                criteria_order = input$order,
                                                 nbresults=input$slider))
+
 
   
 }
