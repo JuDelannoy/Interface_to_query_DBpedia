@@ -25,6 +25,19 @@ server <- function(input, output) {
     
   output$uipredicat <- renderUI({predicat()})
   
+  placetype <- reactive({
+    if (input$predicat=="place" || input$predicat=="place,localisation"){
+    selectInput("typeofplace",
+                "Precision:",
+                c("All","City","Country"))}
+    else{
+      selectInput("typeofplace",
+                  "Precision:",
+                  c("All"))}
+  })
+  
+  output$typeofplace <- renderUI({placetype()})
+  
   
   order <-  reactive({
     selectInput("order",
@@ -33,14 +46,17 @@ server <- function(input, output) {
   
   output$uiorder <- renderUI({order()})
   
-  
   output$table <- renderDataTable(query_DBpedia(typeA = input$typeA,
                                                 typeAprec=input$typeB,
                                                 namesubject=input$nameSubject,
+                                                exactsubject = input$exactsubject,
                                                 verb=input$predicat,
                                                 nameobject = input$nameObject,
+                                                placeobject = input$typeofplace,
+                                                exactobject = input$exactobject,
                                                 criteria_order = input$order,
                                                 nbresults=input$slider))
+  
 
 
   

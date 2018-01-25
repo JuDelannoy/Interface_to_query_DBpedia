@@ -19,10 +19,9 @@ affiche_element <- function(input){
 }
 
 
-
 #fonction qui interroge DBpedia
 #type A est le type en lien avec les categories (Person, Actvity, Organisation)
-query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,criteria_order,nbresults){
+query_DBpedia <- function(typeA,typeAprec,namesubject,exactsubject,verb,nameobject,placeobject,exactobject,criteria_order,nbresults){
   #endpoints and prefix to link to DB and get ontologies
   endpoint <- "http://live.dbpedia.org/sparql"
   options <- NULL
@@ -55,9 +54,14 @@ query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,criteria_o
   if (typeAprec!="All"){q <- paste(q,'?x a dbo:',typeAprec,' .\n',sep="")}
   #recuperation du label
   q <- paste(q,'?x rdfs:label ?name .\n',sep="")
+  q <- paste(q,'BIND(STR(?name) as ?namestr) .\n',sep="")
   #name of the subject
   if (namesubject!="optionnel" & namesubject!=""){
+    if (exactsubject){
+    q <- paste(q,'FILTER(?namestr = STR("',namesubject,'"))\n',sep="")  
+    }else{
     q <- paste(q,'FILTER(CONTAINS(?name,"',namesubject,'")) .\n',sep="")}
+  }
   
   #predicate
   if (verb!="no"){
@@ -74,8 +78,18 @@ query_DBpedia <- function(typeA,typeAprec,namesubject,verb,nameobject,criteria_o
     q <- paste(q,'BIND( IF(isURI(?z),"",concat(?z," ")) as ?nameobjectOTH) . \n',sep="")
     q <- paste(q,'BIND( IF(bound(?nameobjectURI),STR(?nameobjectURI),?nameobjectOTH) as ?nameobject) . \n',sep="")
     if (nameobject!="optionnel" & nameobject!=""){
-     q <- paste(q,'FILTER(CONTAINS(?nameobject,"',nameobject,'")) . \n',sep="")}
+      if (exactobject){
+        q <- paste(q,'FILTER(?nameobject = STR("',nameobject,'"))\n',sep="")  
+      }else{
+      q <- paste(q,'FILTER(CONTAINS(?nameobject,"',nameobject,'")) . \n',sep="")}
     }
+  }
+  
+  cat(file=stderr(), "ICI", placeobject,"\n")
+  if (placeobject=="City"||placeobject=="Country"){
+    q <- paste('?z a dbo:',placeobject,' .\n',sep="")
+  }
+  
     
   #link to wikipedia
   q <- paste(q,'BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink) .\n',sep="")

@@ -25,16 +25,23 @@ ui <- dashboardPage(
                               main_categories$type),
                   uiOutput("typeA_prec"),
                   textInput(inputId = "nameSubject", label = "Nom du sujet",
-                            value = "optionnel")
+                            value = "optionnel"),
+                  checkboxInput(inputId = "exactsubject",
+                                label = "Exact match",
+                                value = FALSE)
                 ),
                 box(
                   title = "Prédicat",
-                  uiOutput("uipredicat")
+                  uiOutput("uipredicat"),
+                  uiOutput("typeofplace")
                 ),
                 box(
                   title = "Objet",
                   textInput(inputId = "nameObject", label = "Nom de l'objet (optionnel)",
-                            value = "optionnel")
+                            value = "optionnel"),
+                  checkboxInput(inputId = "exactobject",
+                                label = "Exact match",
+                                value = FALSE)
                 )),
               fluidRow(
                 box(
