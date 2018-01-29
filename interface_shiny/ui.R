@@ -1,63 +1,59 @@
-
-
-
-
-
-
 ui <- dashboardPage(
   dashboardHeader(title = "Let's query Wikipedia !"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Query", tabName = "dashboard", icon = icon("search")),
-      menuItem("Introduction", tabName = "introduction", icon = icon("question-circle"))
+      menuItem("Map", tabName = "map", icon = icon("globe")),
+      menuItem("User Guide", tabName = "introduction", icon = icon("question-circle"))
     )),
   dashboardBody(
     tabItems(
-      # dans l'item dashboard
+      # in dashboard panel
       tabItem(tabName = "dashboard",
               # Boxes need to be put in a row (or column)
               fluidRow(
-                #element : select Input
                 box(
-                  title = "Sujet",
+                  title = "Subject",
                   selectInput("typeA",
-                              "Type du sujet:",
-                              main_categories$type),
+                              "Type of the subject:",
+                              main_categories$type,
+                              selected = "Person"),
                   uiOutput("typeA_prec"),
-                  textInput(inputId = "nameSubject", label = "Nom du sujet",
-                            value = "optionnel"),
+                  conditionalPanel("input.typeB == 'PopulatedPlace'", selectInput("placesubject","Precision:",c("All","City","Country"),selected = "All")),
+                  textInput(inputId = "nameSubject", label = "Name of the subject",
+                            value = "optionnal"),
                   checkboxInput(inputId = "exactsubject",
                                 label = "Exact match",
-                                value = FALSE)
+                                value = FALSE),
+                  
+                  # Export button
+                  downloadButton("downloadData", "Download")
                 ),
                 box(
-                  title = "Prédicat",
+                  title = "Predicate",
                   uiOutput("uipredicat"),
                   uiOutput("typeofplace")
                 ),
                 box(
-                  title = "Objet",
-                  textInput(inputId = "nameObject", label = "Nom de l'objet (optionnel)",
-                            value = "optionnel"),
+                  title = "Object",
+                  textInput(inputId = "nameObject", label = "Name of the object",
+                            value = "optionnal"),
                   checkboxInput(inputId = "exactobject",
                                 label = "Exact match",
                                 value = FALSE)
                 )),
               fluidRow(
                 box(
-                  title = "Ordre",
-                  uiOutput("uiorder")
-                ),
-                box(
-                  title = "Résultats",
-                  sliderInput("slider", "Nombre de résultats:", min=0, max=1000, value=100,step = 50)
+                  title = "Results",
+                  sliderInput("slider", "Number of results:", min=0, max=1000, value=100,step = 50)
                 )
               ),
               fluidRow(
-                #new row : on affiche plot1
+                actionButton("goButton", "Go!"),
+                #new row : plot the table
                 withSpinner(dataTableOutput("table")))
       ),
-      # Second tab content
+      # Second tab content : explanations
       tabItem(tabName = "introduction",
               h2("How to use this tool ?"),
               "Choose the simplest and more straightforward form. 
