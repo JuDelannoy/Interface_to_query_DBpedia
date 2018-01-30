@@ -16,7 +16,7 @@ predicates_dictionnary <- read.csv("DATA/predicates_dictionnary.csv", stringsAsF
 
 
 #querying DBpedia with the parameters given in the interface
-query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,nameobject,placeobject,exactobject,mindate,maxdate,nbresults){
+query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,verb2,nameobject,exactobject,placeobject,nameobject2,exactobject2,placeobject2,mindate,maxdate,mindate2,maxdate2,nbresults){
 
   cat(file=stderr(), "ICI", mindate,"\n")
     
@@ -55,7 +55,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #in case of subject is a place : add the coordinates
   q <- paste(q,'OPTIONAL{?x georss:point ?coordinates} .\n',sep="")
   
-  #predicate
+  #PREDICATE 1
   if (verb!="no"){
     verbPosition <- which(verb == predicates_dictionnary$subtitle)
   if(predicates_dictionnary$direct[verbPosition]){
@@ -93,13 +93,53 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
       if (is.na(maxdate)){}else{q <- paste(q,'FILTER(?date <= "',maxdate,'-12-31"^^xsd:date).\n',sep="")}
     }
     
-    
+    #add precision about the type of place if it is the case
+    if (placeobject=="City"||placeobject=="Country"){
+      q <- paste(q,'?z a dbo:',placeobject,' .\n',sep="")
+    }
   }
   
-  
-  #add precision about the type of place if it is the case
-  if (placeobject=="City"||placeobject=="Country"){
-    q <- paste(q,'?z a dbo:',placeobject,' .\n',sep="")
+  #PREDICATE 2
+  if (verb2!="no"){
+    verbPosition2 <- which(verb2 == predicates_dictionnary$subtitle)
+    if(predicates_dictionnary$direct[verbPosition2]){
+      q <- paste(q,'?x ',predicates_dictionnary$original[verbPosition2],' ?zbis .\n',sep="")}
+    else
+    {q <- paste(q,'?zbis ',predicates_dictionnary$original[verbPosition2],' ?x .\n',sep="")}
+    
+    #OBJECT, exists if predicate != "no"
+    #if object is an uri it takes the label, otherwise it take the object himself (ie if it is a literal)
+    q <- paste(q,'OPTIONAL{ ?zbis rdfs:label ?nameobjectURIbis .} \n',sep="")
+    q <- paste(q,'BIND (COALESCE(STR(?nameobjectURIbis),concat(?zbis," ")) as ?Object2) .\n',sep="")
+    
+    #add the coordinates if the object is a place
+    #for the URI objects
+    q <- paste(q,'OPTIONAL{?zbis georss:point ?place2} .\n',sep="")
+    #for the non URI objects
+    q <- paste(q,'OPTIONAL{?pxbis a dbo:Place .\n ?pxbis rdfs:label ?zbis .\n ?pxbis georss:point ?place2} .\n',sep="")
+
+    #filter on the name given by the user, if he gives one
+    if (nameobject2!="optionnal" & nameobject2!=""){
+      if (exactobject2){
+        q <- paste(q,'FILTER(?Object2 = STR("',nameobject2,'"))\n',sep="")  
+      }else{
+        q <- paste(q,'FILTER(CONTAINS(?Object2,"',nameobject2,'")) . \n',sep="")}
+    }
+    
+    #if object2 exists
+    #if the object2 is the date (mindate and maxdate !=NA)
+    #year
+    if (grepl("date",verb2)){  
+      q <- paste(q,"BIND(strdt(?Object2,xsd:date) AS ?datebis).\n",sep="")
+      if (is.na(mindate2)){}else{q <- paste(q,'FILTER(?datebis >= "',mindate2,'-01-01"^^xsd:date).\n',sep="")}
+      if (is.na(maxdate2)){}else{q <- paste(q,'FILTER(?datebis <= "',maxdate2,'-12-31"^^xsd:date).\n',sep="")}
+    }
+    
+    #add precision about the type of place if it is the case
+    if (placeobject2=="City"||placeobject2=="Country"){
+      q <- paste(q,'?zbis a dbo:',placeobject2,' .\n',sep="")
+    }
+
   }
   
  
@@ -132,7 +172,10 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   if("nameobjectURI" %in% colnames(final_res)){final_res$nameobjectURI <- NULL}
   if("px" %in% colnames(final_res)){final_res$px <- NULL}
   if("date" %in% colnames(final_res)){final_res$date <- NULL}
-  
+  if("zbis" %in% colnames(final_res)){final_res$zbis <- NULL}
+  if("nameobjectURIbis" %in% colnames(final_res)){final_res$nameobjectURIbis <- NULL}
+  if("pxbis" %in% colnames(final_res)){final_res$pxbis <- NULL}
+  if("datebis" %in% colnames(final_res)){final_res$datebis <- NULL}
   #deleting empty columns
   final_res <- Filter(function(x)!all(is.na(x)), final_res)
   

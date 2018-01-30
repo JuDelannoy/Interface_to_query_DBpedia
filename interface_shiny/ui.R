@@ -1,50 +1,65 @@
 ui <- dashboardPage(
+  
   dashboardHeader(title = "Let's query Wikipedia !"),
+  
   dashboardSidebar(
     sidebarMenu(
       menuItem("Query", tabName = "dashboard", icon = icon("search")),
       menuItem("Map", tabName = "map", icon = icon("globe")),
       menuItem("User Guide", tabName = "introduction", icon = icon("question-circle"))
     )),
+  
   dashboardBody(
     tabItems(
       # in dashboard panel
       tabItem(tabName = "dashboard",
-              # Boxes need to be put in a row (or column)
+              # 1 : subject
+              fluidRow(h3("Subject")),
               fluidRow(
-                box(
-                  title = "Subject",
+                box( width = 4,height = 150,
                   selectInput("typeA",
                               "Type of the subject:",
                               main_categories$type,
-                              selected = "Person"),
+                              selected = "Person")),
+                box( width = 4,height = 150,
                   uiOutput("typeA_prec"),
-                  conditionalPanel("input.typeB == 'PopulatedPlace'", selectInput("placesubject","Precision:",c("All","City","Country"),selected = "All")),
+                  conditionalPanel("input.typeB == 'PopulatedPlace'", selectInput("placesubject","Precision:",c("All","City","Country"),selected = "All"))),
+                box( width = 4,height = 150,
                   textInput(inputId = "nameSubject", label = "Name of the subject",
                             value = "optionnal"),
                   checkboxInput(inputId = "exactsubject",
                                 label = "Exact match",
-                                value = FALSE),
+                                value = FALSE))
                   
-                  # Export button
-                  downloadButton("downloadData", "Download")
                 ),
-                box(
-                  title = "Predicate",
+              #2 : predicates and objects
+              fluidRow(h3("Predicates and objects")),
+              fluidRow(
+                box(title = "Predicate",
                   uiOutput("uipredicat"),
-                  uiOutput("typeofplace")
+                  uiOutput("typeofplace"),
+                  uiOutput("uipredicat2"),
+                  uiOutput("typeofplace2")
                 ),
-                box(
-                  title = "Object",
+                box(title = "Object",
                   textInput(inputId = "nameObject", label = "Name of the object",
                             value = "optionnal"),
                   checkboxInput(inputId = "exactobject",
                                 label = "Exact match",
-                                value = FALSE)
-                )),
+                                value = FALSE),
+                  uiOutput("uirangedatemin"),
+                  uiOutput("uirangedatemax"),
+                textInput(inputId = "nameObject2", label = "Name of the object",
+                          value = "optionnal"),
+                checkboxInput(inputId = "exactobject2",
+                              label = "Exact match",
+                              value = FALSE),
+                uiOutput("uirangedatemin2"),
+                uiOutput("uirangedatemax2"))
+                ),
+              #2 : details
+              fluidRow(h3("Preferences")),
               fluidRow(
-                box(uiOutput("uirangedatemin"),
-                uiOutput("uirangedatemax")),
                 box(
                   title = "Results",
                   sliderInput("slider", "Number of results:", min=0, max=1000, value=100,step = 50)
@@ -52,6 +67,8 @@ ui <- dashboardPage(
               ),
               fluidRow(
                 actionButton("goButton", "Go!"),
+                # Export button
+                downloadButton("downloadData", "Download"),
                 #new row : plot the table
                 withSpinner(dataTableOutput("table")))
       ),
@@ -63,4 +80,4 @@ ui <- dashboardPage(
       )
       )
     )
-  )
+)
