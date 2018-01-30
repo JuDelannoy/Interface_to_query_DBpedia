@@ -51,6 +51,11 @@ server <- function(input, output) {
   
   output$typeofplace <- renderUI({placetype()})
 
+  rangedatemin <- reactive({switch(grepl("date",input$predicat),
+         "TRUE" = numericInput("rangedatemin", label = "minimum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
+                               width = NULL))})
+  
+  output$uirangedatemin <- renderUI({rangedatemin()})
    
   #plot table of results
     querying <- eventReactive(input$goButton,{query_DBpedia(typeA = input$typeA,
@@ -62,6 +67,7 @@ server <- function(input, output) {
                                                             nameobject = input$nameObject,
                                                             placeobject = input$typeofplace,
                                                             exactobject = input$exactobject,
+                                                            mindate = input$rangedatemin,
                                                             nbresults=input$slider)}) 
   
   output$table <- renderDataTable({

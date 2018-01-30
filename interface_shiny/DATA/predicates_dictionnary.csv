@@ -1,77 +1,76 @@
-subtitle;original;direct;option;unprecise_place
-birth place;dbo:birthPlace;TRUE;FALSE;TRUE
-starred in;dbo:starring;FALSE;FALSE;FALSE
-is author of;dbo:author;FALSE;FALSE;FALSE
-type of place;dbo:type|dbp:status;TRUE;TRUE;TRUE
-place, localisation;dbo:city|dbo:location|dbo:country|dbp:country;TRUE;FALSE;TRUE
-coordinates;georss:point;TRUE;FALSE;FALSE
-birth date;dbp:birthDate|dbo:birthDate;TRUE;FALSE;FALSE
-type of job;dct:description;TRUE;TRUE;FALSE
-team;dbo:team;FALSE;TRUE;FALSE
-term start;dbo:activeYearsStartDate|dbp:termStart|dbo:activeYearsStartYear;TRUE;TRUE;FALSE
-term end;dbo:activeYearsEndDate|dbo:activeYearsEndYear;TRUE;FALSE;FALSE
-party;dbo:party;TRUE;TRUE;FALSE
-successor;dbo:predecessor;FALSE;FALSE;FALSE
-predecessor;dbo:predecessor;TRUE;FALSE;FALSE
-title;dbp:title;TRUE;FALSE;FALSE
-greatest epoch;dbp:years;TRUE;FALSE;FALSE
-population;dbo:populationTotal;TRUE;FALSE;FALSE
-is birth Place of;dbo:birthPlace;FALSE;TRUE;FALSE
-is Part of;dbo:isPartOf;TRUE;FALSE;FALSE
-is the city of;dbo:city;FALSE;TRUE;FALSE
-total area (km²);dbo:areaTotal;TRUE;FALSE;FALSE
-gravity;dbp:gravity;TRUE;FALSE;FALSE
-period;dbp:period;TRUE;FALSE;FALSE
-radius;dbp:radius;TRUE;FALSE;FALSE
-constellation;dbp:constell;TRUE;FALSE;FALSE
-temperature;dbp:temperature;TRUE;TRUE;FALSE
-absolute magnitude;dbp:absmagV;TRUE;FALSE;FALSE
-apparent magnitude;dbp:appmagV;TRUE;FALSE;FALSE
-family;dbo:family;TRUE;FALSE;FALSE
-author;dbo:author;TRUE;FALSE;FALSE
-release date;dbp:date|dbp:year|dbo:releaseDate|dbp:recorded;TRUE;TRUE;FALSE
-owner;dbp:owner;TRUE;TRUE;FALSE
-country;dbo:country|dbp:country;TRUE;FALSE;FALSE
-writer;dbo:writer|dbo:artist;TRUE;TRUE;FALSE
-language;dbp:language;TRUE;FALSE;FALSE
-director;dbo:director;TRUE;FALSE;FALSE
-starring;dbo:starring|dbp:animator;TRUE;FALSE;FALSE
-producer;dbo:producer;TRUE;FALSE;FALSE
-record label;dbo:recordLabel;TRUE;TRUE;FALSE
-album;dbo:album;TRUE;FALSE;FALSE
-style, genre;dbo:genre;TRUE;FALSE;FALSE
-publisher;dbo:publisher;TRUE;FALSE;FALSE
-nationality;dbo:citizenship|dbp:nationality;TRUE;FALSE;FALSE
-spouse;dbo:spouse;TRUE;FALSE;FALSE
-children;dbo:child;TRUE;FALSE;FALSE
-parents;dbo:child;FALSE;FALSE;FALSE
-death place;dbo:deathPlace|dbp:deathPlace;TRUE;FALSE;TRUE
-death date;dbp:deathDate;TRUE;FALSE;FALSE
-birth name;dbp:birthName;TRUE;FALSE;FALSE
-has influenced;dbo:influencedBy;TRUE;FALSE;FALSE
-was influenced by;dbo:influencedBy;FALSE;FALSE;FALSE
-necessary skills;dbp:skills;TRUE;FALSE;FALSE
-minimum number of players;dbp:players;TRUE;FALSE;FALSE
-playing time for the game;dbp:playingTime;TRUE;FALSE;FALSE
-game minimum age;dbp:ages;TRUE;FALSE;FALSE
-part of random chance;dbp:randomChance;TRUE;FALSE;FALSE
-game complexity;dbp:complexity;TRUE;FALSE;FALSE
-contact between players;dbp:contact;TRUE;FALSE;FALSE
-sport equipment needed;dbp:equipment;TRUE;FALSE;FALSE
-playing region;dbp:region;TRUE;FALSE;FALSE
-type of sport;dbp:type;TRUE;FALSE;FALSE
-category of sport;dbo:category|dbp:category;TRUE;FALSE;FALSE
-is the activity of;dbo:sport;FALSE;FALSE;FALSE
-founding year;dbo:foundingYear;TRUE;FALSE;FALSE
-chairman;dbo:chairman;TRUE;FALSE;FALSE
-sport league;dbo:league;TRUE;FALSE;FALSE
-is the team of;dbo:team;FALSE;FALSE;FALSE
-manager;dbo:manager;TRUE;FALSE;FALSE
-creator;dbo:creator;TRUE;FALSE;FALSE
-place;dbo:place;TRUE;FALSE;TRUE
-date;dbo:date|dbp:date;TRUE;FALSE;FALSE
-city;dbo:city|dbo:hometown;TRUE;FALSE;FALSE
-founded by;dbo:foundedBy;TRUE;FALSE;FALSE
-type of organisation;dbo:type;TRUE;FALSE;FALSE
-associated Band or Artist;dbo:associatedBand|dbo:associatedMusicalArtist;TRUE;FALSE;FALSE
-members of the band;dbp:bandMembers|dbp:currentMembers;TRUE;FALSE;FALSE
+subtitle;original;direct;option;unprecise_place;place
+birth place;dbo:birthPlace;TRUE;FALSE;TRUE;TRUE
+starred in;dbo:starring;FALSE;FALSE;FALSE;FALSE
+is author of;dbo:author;FALSE;FALSE;FALSE;FALSE
+type of place;dbo:type|dbp:status;TRUE;TRUE;TRUE;TRUE
+place, localisation;dbo:city|dbo:location|dbo:country|dbp:country;TRUE;FALSE;TRUE;TRUE
+birth date;dbp:birthDate|dbo:birthDate;TRUE;FALSE;FALSE;FALSE
+type of job;dct:description;TRUE;TRUE;FALSE;FALSE
+team;dbo:team;FALSE;TRUE;FALSE;FALSE
+term start;dbo:activeYearsStartDate|dbp:termStart|dbo:activeYearsStartYear;TRUE;TRUE;FALSE;FALSE
+term end;dbo:activeYearsEndDate|dbo:activeYearsEndYear;TRUE;FALSE;FALSE;FALSE
+party;dbo:party;TRUE;TRUE;FALSE;FALSE
+successor;dbo:predecessor;FALSE;FALSE;FALSE;FALSE
+predecessor;dbo:predecessor;TRUE;FALSE;FALSE;FALSE
+title;dbp:title;TRUE;FALSE;FALSE;FALSE
+greatest epoch;dbp:years;TRUE;FALSE;FALSE;FALSE
+population;dbo:populationTotal;TRUE;FALSE;FALSE;FALSE
+is birth Place of;dbo:birthPlace;FALSE;TRUE;FALSE;FALSE
+is Part of;dbo:isPartOf;TRUE;FALSE;FALSE;TRUE
+is the city of;dbo:city;FALSE;TRUE;FALSE;FALSE
+total area (km²);dbo:areaTotal;TRUE;FALSE;FALSE;FALSE
+gravity;dbp:gravity;TRUE;FALSE;FALSE;FALSE
+period;dbp:period;TRUE;FALSE;FALSE;FALSE
+radius;dbp:radius;TRUE;FALSE;FALSE;FALSE
+constellation;dbp:constell;TRUE;FALSE;FALSE;FALSE
+temperature;dbp:temperature;TRUE;TRUE;FALSE;FALSE
+absolute magnitude;dbp:absmagV;TRUE;FALSE;FALSE;FALSE
+apparent magnitude;dbp:appmagV;TRUE;FALSE;FALSE;FALSE
+family;dbo:family;TRUE;FALSE;FALSE;FALSE
+author;dbo:author;TRUE;FALSE;FALSE;FALSE
+release date;dbp:date|dbp:year|dbo:releaseDate|dbp:recorded;TRUE;TRUE;FALSE;FALSE
+owner;dbp:owner;TRUE;TRUE;FALSE;FALSE
+country;dbo:country|dbp:country;TRUE;FALSE;FALSE;TRUE
+writer;dbo:writer|dbo:artist;TRUE;TRUE;FALSE;FALSE
+language;dbp:language;TRUE;FALSE;FALSE;FALSE
+director;dbo:director;TRUE;FALSE;FALSE;FALSE
+starring;dbo:starring|dbp:animator;TRUE;FALSE;FALSE;FALSE
+producer;dbo:producer;TRUE;FALSE;FALSE;FALSE
+record label;dbo:recordLabel;TRUE;TRUE;FALSE;FALSE
+album;dbo:album;TRUE;FALSE;FALSE;FALSE
+style, genre;dbo:genre;TRUE;FALSE;FALSE;FALSE
+publisher;dbo:publisher;TRUE;FALSE;FALSE;FALSE
+nationality;dbo:citizenship|dbp:nationality;TRUE;FALSE;FALSE;FALSE
+spouse;dbo:spouse;TRUE;FALSE;FALSE;FALSE
+children;dbo:child;TRUE;FALSE;FALSE;FALSE
+parents;dbo:child;FALSE;FALSE;FALSE;FALSE
+death place;dbo:deathPlace|dbp:deathPlace;TRUE;FALSE;TRUE;TRUE
+death date;dbp:deathDate;TRUE;FALSE;FALSE;FALSE
+birth name;dbp:birthName;TRUE;FALSE;FALSE;FALSE
+has influenced;dbo:influencedBy;TRUE;FALSE;FALSE;FALSE
+was influenced by;dbo:influencedBy;FALSE;FALSE;FALSE;FALSE
+necessary skills;dbp:skills;TRUE;FALSE;FALSE;FALSE
+minimum number of players;dbp:players;TRUE;FALSE;FALSE;FALSE
+playing time for the game;dbp:playingTime;TRUE;FALSE;FALSE;FALSE
+game minimum age;dbp:ages;TRUE;FALSE;FALSE;FALSE
+part of random chance;dbp:randomChance;TRUE;FALSE;FALSE;FALSE
+game complexity;dbp:complexity;TRUE;FALSE;FALSE;FALSE
+contact between players;dbp:contact;TRUE;FALSE;FALSE;FALSE
+sport equipment needed;dbp:equipment;TRUE;FALSE;FALSE;FALSE
+playing region;dbp:region;TRUE;FALSE;FALSE;TRUE
+type of sport;dbp:type;TRUE;FALSE;FALSE;FALSE
+category of sport;dbo:category|dbp:category;TRUE;FALSE;FALSE;FALSE
+is the activity of;dbo:sport;FALSE;FALSE;FALSE;FALSE
+founding year;dbo:foundingYear;TRUE;FALSE;FALSE;FALSE
+chairman;dbo:chairman;TRUE;FALSE;FALSE;FALSE
+sport league;dbo:league;TRUE;FALSE;FALSE;FALSE
+is the team of;dbo:team;FALSE;FALSE;FALSE;FALSE
+manager;dbo:manager;TRUE;FALSE;FALSE;FALSE
+creator;dbo:creator;TRUE;FALSE;FALSE;FALSE
+place;dbo:place;TRUE;FALSE;TRUE;TRUE
+date;dbo:date|dbp:date;TRUE;FALSE;FALSE;FALSE
+city;dbo:city|dbo:hometown;TRUE;FALSE;FALSE;TRUE
+founded by;dbo:foundedBy;TRUE;FALSE;FALSE;FALSE
+type of organisation;dbo:type;TRUE;FALSE;FALSE;FALSE
+associated Band or Artist;dbo:associatedBand|dbo:associatedMusicalArtist;TRUE;FALSE;FALSE;FALSE
+members of the band;dbp:bandMembers|dbp:currentMembers;TRUE;FALSE;FALSE;FALSE
