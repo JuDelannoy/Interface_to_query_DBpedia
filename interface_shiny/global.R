@@ -16,7 +16,7 @@ predicates_dictionnary <- read.csv("DATA/predicates_dictionnary.csv", stringsAsF
 
 
 #querying DBpedia with the parameters given in the interface
-query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,nameobject,placeobject,exactobject,mindate,nbresults){
+query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,nameobject,placeobject,exactobject,mindate,maxdate,nbresults){
 
   cat(file=stderr(), "ICI", mindate,"\n")
     
@@ -89,7 +89,8 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     #year
     if (grepl("date",verb)){  
       q <- paste(q,"BIND(strdt(?Object,xsd:date) AS ?date).\n",sep="")
-      q <- paste(q,'FILTER(?date >= "',mindate,'-01-01"^^xsd:date).\n',sep="")
+      if (is.na(mindate)){}else{q <- paste(q,'FILTER(?date >= "',mindate,'-01-01"^^xsd:date).\n',sep="")}
+      if (is.na(maxdate)){}else{q <- paste(q,'FILTER(?date <= "',maxdate,'-12-31"^^xsd:date).\n',sep="")}
     }
     
     

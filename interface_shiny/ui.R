@@ -43,7 +43,8 @@ ui <- dashboardPage(
                                 value = FALSE)
                 )),
               fluidRow(
-                box(uiOutput("uirangedatemin")),
+                box(uiOutput("uirangedatemin"),
+                uiOutput("uirangedatemax")),
                 box(
                   title = "Results",
                   sliderInput("slider", "Number of results:", min=0, max=1000, value=100,step = 50)

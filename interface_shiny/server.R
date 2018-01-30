@@ -56,6 +56,12 @@ server <- function(input, output) {
                                width = NULL))})
   
   output$uirangedatemin <- renderUI({rangedatemin()})
+  
+  rangedatemax <- reactive({switch(grepl("date",input$predicat),
+                                   "TRUE" = numericInput("rangedatemax", label = "maximum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
+                                                         width = NULL))})
+  
+  output$uirangedatemax <- renderUI({rangedatemax()})
    
   #plot table of results
     querying <- eventReactive(input$goButton,{query_DBpedia(typeA = input$typeA,
@@ -68,6 +74,7 @@ server <- function(input, output) {
                                                             placeobject = input$typeofplace,
                                                             exactobject = input$exactobject,
                                                             mindate = input$rangedatemin,
+                                                            maxdate = input$rangedatemax,
                                                             nbresults=input$slider)}) 
   
   output$table <- renderDataTable({
