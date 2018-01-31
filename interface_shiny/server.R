@@ -2,51 +2,47 @@
 
 server <- function(input, output) {
   
-  #subject
+  #########################################################################################################################################
+  #SUBJECT
   typeA_prec <- reactive({ 
     switch(input$typeA,
-           selectInput("typeB","Precision about the type of the subject:",sub_categories[[input$typeA]],selected = "Athlete"))
+           selectInput("typeB","Precision about the type of the subject:",sub_categories[[input$typeA]],selected = "All"))
     
   })
   
   output$typeA_prec <- renderUI({typeA_prec()})
 
   
+  #########################################################################################################################################
+  #PREDICATE1
   
-  #predicate
-  predicat_typeA <- reactive({
+  #SELECT INPUT FOR PREDICATE 1
+  output$uipredicat <- renderUI({predicat1()})
+  
+  predicat1 <- reactive({
+    switch(input$typeB,
+           "All" = predicat1_typeA(),
+           selectInput("predicat","Information you want about the subject:",predicates_categories[[input$typeB]],selected = "no"))
+  })
+  
+  predicat1_typeA <- reactive({
     switch(input$typeA,
     selectInput("predicat","Information you want about the subject:",predicates_categories[[input$typeA]])
     )
   })
-  
-  
-  predicat <- reactive({
-    switch(input$typeB,
-           "All" = predicat_typeA(),
-           selectInput("predicat","Information you want about the subject:",predicates_categories[[input$typeB]],selected = "no")
-    )
-  })
-    
-  output$uipredicat <- renderUI({predicat()})
-  
-  
-  predicat2 <- reactive({
-    switch(input$typeB,
-           "All" = predicat_typeA(),
-           selectInput("predicat2","Information you want about the subject:",predicates_categories[[input$typeB]],selected = "no")
-    )
-  })
-  
-  output$uipredicat2 <- renderUI({predicat2()})
 
-  placetype <- reactive({
+
+  #TYPE OF PLACE for located predicates
+  #SELECT INPUT WITH CITY/COUNTRY WHEN PLACE
+  
+  output$typeofplace <- renderUI({placetype1()})
+  
+  placetype1 <- reactive({
     if (input$predicat == "no"){
       selectInput("typeofplace",
                   "Precision:",
                   c("All"),selected = "All")}
 
-    #object
     #if the choose subject has its "unprecise_place" column filled by TRUE, you can specify the type of place
     else if (predicates_dictionnary$unprecise_place[which(input$predicat == predicates_dictionnary$subtitle)] == TRUE){
     selectInput("typeofplace",
@@ -58,7 +54,46 @@ server <- function(input, output) {
                   c("All"),selected = "All")}
   })
   
-  output$typeofplace <- renderUI({placetype()})
+
+  
+  #RANGE DATE for temporal predicates
+  
+  output$uirangedatemin <- renderUI({rangedatemin()})
+  
+  rangedatemin <- reactive({switch(grepl("date",input$predicat),
+                                   "TRUE" = numericInput("rangedatemin", label = "minimum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
+                                                         width = NULL))})
+  output$uirangedatemax <- renderUI({rangedatemax()})
+  
+  rangedatemax <- reactive({switch(grepl("date",input$predicat),
+                                   "TRUE" = numericInput("rangedatemax", label = "maximum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
+                                                         width = NULL))})
+  
+  
+  #########################################################################################################################################
+  #PREDICATE2  
+  
+  #SELECT INPUT FOR PREDICATE 2
+  output$uipredicat2 <- renderUI({predicat2()})
+  
+  predicat2 <- reactive({
+    switch(input$typeB,
+           "All" = predicat2_typeA(),
+           selectInput("predicat2","Information you want about the subject:",predicates_categories[[input$typeB]],selected = "no")
+    )
+  })
+  
+  predicat2_typeA <- reactive({
+    switch(input$typeA,
+           selectInput("predicat2","Information you want about the subject:",predicates_categories[[input$typeA]])
+    )
+  })
+  
+  
+  #TYPE OF PLACE for located predicates
+  #SELECT INPUT WITH CITY/COUNTRY WHEN PLACE
+  
+  output$typeofplace2 <- renderUI({placetype2()})
   
   placetype2 <- reactive({
     if (input$predicat2 == "no"){
@@ -66,7 +101,6 @@ server <- function(input, output) {
                   "Precision:",
                   c("All"),selected = "All")}
     
-    #object
     #if the choose subject has its "unprecise_place" column filled by TRUE, you can specify the type of place
     else if (predicates_dictionnary$unprecise_place[which(input$predicat2 == predicates_dictionnary$subtitle)] == TRUE){
       selectInput("typeofplace2",
@@ -78,34 +112,29 @@ server <- function(input, output) {
                   c("All"),selected = "All")}
   })
   
-  output$typeofplace2 <- renderUI({placetype2()})
-
-  rangedatemin <- reactive({switch(grepl("date",input$predicat),
-         "TRUE" = numericInput("rangedatemin", label = "minimum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
-                               width = NULL))})
   
-  output$uirangedatemin <- renderUI({rangedatemin()})
-  
-  rangedatemax <- reactive({switch(grepl("date",input$predicat),
-                                   "TRUE" = numericInput("rangedatemax", label = "maximum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
-                                                         width = NULL))})
-  
-  output$uirangedatemax <- renderUI({rangedatemax()})
-  
+  #RANGE DATE for temporal predicates
+  output$uirangedatemin2 <- renderUI({rangedatemin2()})
   
   rangedatemin2 <- reactive({switch(grepl("date",input$predicat2),
                                    "TRUE" = numericInput("rangedatemin2", label = "minimum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
                                                          width = NULL))})
   
-  output$uirangedatemin2 <- renderUI({rangedatemin2()})
+
+  output$uirangedatemax2 <- renderUI({rangedatemax2()})
   
   rangedatemax2 <- reactive({switch(grepl("date",input$predicat2),
                                    "TRUE" = numericInput("rangedatemax2", label = "maximum date (yyyy)", value = "yyyy", min = NA, max = NA, step = NA,
                                                          width = NULL))})
   
-  output$uirangedatemax2 <- renderUI({rangedatemax2()})
+
    
-  #plot table of results
+  
+  #########################################################################################################################################  
+  #PLOT RESULTS
+  
+    output$table <- renderDataTable({querying()})
+  
     querying <- eventReactive(input$goButton,{query_DBpedia(typeA = input$typeA,
                                                             typeAprec=input$typeB,
                                                             placesubject = input$placesubject,
@@ -125,13 +154,10 @@ server <- function(input, output) {
                                                             maxdate2 = input$rangedatemax2,
                                                             nbresults = input$slider)}) 
   
-  output$table <- renderDataTable({
-    #input$goButton
-    #isolate(querying())
-    querying()
-    })
+
   
-  #export
+  #########################################################################################################################################  
+  #EXPORT
   output$downloadData <- downloadHandler(
     filename = function() {
       paste("dbpediaExtract", ".csv", sep = "")
