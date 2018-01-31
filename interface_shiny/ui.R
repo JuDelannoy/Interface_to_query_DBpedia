@@ -40,6 +40,7 @@ ui <- dashboardPage(
                   uiOutput("uipredicat"),
                   uiOutput("typeofplace"),
                   conditionalPanel('input.nbpredicates == "2"',
+                                   "Predicate 2",
                                    uiOutput("uipredicat2"),
                                    uiOutput("typeofplace2"))
                 ),
@@ -52,6 +53,7 @@ ui <- dashboardPage(
                   uiOutput("uirangedatemin"),
                   uiOutput("uirangedatemax"),
                   conditionalPanel('input.nbpredicates == "2"',
+                                  " Object 2 :",
                                    textInput(inputId = "nameObject2", label = "Name of the object",value = "optionnal"),
                                     checkboxInput(inputId = "exactobject2",label = "Exact match",value = FALSE),
                                     uiOutput("uirangedatemin2"),
@@ -78,7 +80,10 @@ ui <- dashboardPage(
               h2("How to use this tool ?"),
               "Choose the simplest and more straightforward form. 
               Ex : If I want all the movies played by Diane Kruger, I start by 'My subjet is a Person, who is an actress.'"
-      )
+      ),
+      tabItem(tabName = "map",
+              leafletOutput("mymap")
       )
     )
+)
 )

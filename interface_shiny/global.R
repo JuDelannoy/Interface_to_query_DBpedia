@@ -1,8 +1,11 @@
 library(SPARQL) # SPARQL querying package
+library(dplyr)
 #package to create the interface
 library(shiny)
 library(shinydashboard)
 library(shinycssloaders)
+#package to get the map
+library(leaflet)
 
 #reading csv 
 #categories of the subject
@@ -55,8 +58,10 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     q <- paste(q,'FILTER(CONTAINS(?name,"',namesubject,'")) .\n',sep="")}
   }
   
-  #if the subject is a place : add the coordinates
-  q <- paste(q,'OPTIONAL{?x georss:point ?coordinates} .\n',sep="")
+  #if the subject is a place or an event : add the coordinates
+  #usefull to avoid for example coordinates of people, given by dbpedia
+  if (typeA == "Event" || typeA=="Place"){
+  q <- paste(q,'OPTIONAL{?x georss:point ?coordinates} .\n',sep="")}
   
   #PREDICATE 1
   #if one predicate is chosen
@@ -79,10 +84,12 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     
     #add the coordinates if the object is a place
     #CHANGE POSSIBLE HERE if take only column place ==TRUE
+    if (predicates_dictionnary$place[verbPosition]){
     #for the URI objects
     q <- paste(q,'OPTIONAL{?z georss:point ?place} .\n',sep="")
     #for the non URI objects
     q <- paste(q,'OPTIONAL{?px a dbo:Place .\n ?px rdfs:label ?z .\n ?px georss:point ?place} .\n',sep="")
+    }
     
     
     #filter on the name given by the user, if he gives one
@@ -194,7 +201,15 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #deleting empty columns
   final_res <- Filter(function(x)!all(is.na(x)), final_res)
   
-
+  #rename columns
+  columns <- colnames(final_res)
+  columns <- replace(columns, columns=="Object", verb)
+  columns <- replace(columns, columns=="Object2", verb2)
+  columns <- replace(columns, columns=="Subject", typeA)
+  columns <- replace(columns, columns=="place2", paste("coordinates of",verb2))
+  columns <- replace(columns, columns=="place", paste("coordinates of",verb))
+  
+  colnames(final_res) <- columns
   
   return(final_res)
 }

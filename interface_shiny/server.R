@@ -168,4 +168,19 @@ server <- function(input, output) {
   )
   
   
+  #########################################################################################################################################
+    #MAP
+    
+    output$mymap <- renderLeaflet({
+      # define the leaflet map object
+      leaflet() %>%
+        addTiles() %>%
+        #setView(lng = 2.35, lat = 48.85 , zoom = 2) %>%
+        addMarkers(lng = 78.0419, lat = 27.1750, popup = "Taj Mahal, Agra, India") %>%
+        addMarkers(lng = 7.0419, lat = 7.1750, popup = "Taj Mahal, Agra, India") #%>%
+        #addPopups(lng = 78.0419, lat = 27.1750, popup = "Taj Mahal, Agra, India") 
+      
+    })
+    
 }
+
