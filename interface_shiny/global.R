@@ -1,5 +1,6 @@
 library(SPARQL) # SPARQL querying package
 library(dplyr)
+library(tm)
 #package to create the interface
 library(shiny)
 library(shinydashboard)
@@ -186,29 +187,27 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #save result as dataframe
   final_res <- as.data.frame(res)
   
+  
   #split lat lon in 2 different columns
   #for subject
-  placesubcolumn <- ""
-  if("coordinates" %in% colnames(final_res)){placesubcolumn <- "coordinates"}
-  if(placesubcolumn !="")
-  {
-    latlon <- reshape2::colsplit(final_res[[placesubcolumn]], " ",c("latitude","longitude"))
+  placecolumn <- ""
+  if("coordinates" %in% colnames(final_res)){
+    placecolumn <- "coordinates"
+    latlon <- reshape2::colsplit(final_res[[placecolumn]], " ",c("latitude","longitude"))
     final_res <- cbind(final_res,latlon)
   }
   #for object 1
   placecolumn <- ""
-  if("place" %in% colnames(final_res)){placecolumn <- "place"}
-  if(placecolumn !="")
-  {
+  if("place" %in% colnames(final_res)){
+  placecolumn <- "place"
   latlon <- reshape2::colsplit(final_res[[placecolumn]], " ",c("latitude_of_the_place","longitude_of_the_place"))
   final_res <- cbind(final_res,latlon)
   }
   #for object 2
-  placecolumn2 <- ""
-  if("place2" %in% colnames(final_res)){placecolumn2 <- "place2"}
-  if(placecolumn2 !="")
-  {
-    latlon <- reshape2::colsplit(final_res[[placecolumn2]], " ",c("latitude_of_the_place2","longitude_of_the_place2"))
+  placecolumn <- ""
+  if("place2" %in% colnames(final_res)){
+    placecolumn <- "place2"
+    latlon <- reshape2::colsplit(final_res[[placecolumn]], " ",c("latitude_of_the_place2","longitude_of_the_place2"))
     final_res <- cbind(final_res,latlon)
   }
 
@@ -232,8 +231,6 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #rename columns
   columns <- colnames(final_res)
   columns <- replace(columns, columns=="Subject", typeA)
-  #columns <- replace(columns, columns=="place2", paste("coordinates of",verb2))
-  #columns <- replace(columns, columns=="place", paste("coordinates of",verb))
   columns <- replace(columns, columns=="Object", verb)
   columns <- replace(columns, columns=="Object2", verb2)
   
@@ -242,21 +239,23 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #formatting coordinates to keep only 1 decimal 
   #many of places have several coordinates as the decimals changed a bit, now most of them will be identical
   if("latitude" %in% colnames(final_res)){ 
-    final_res$latitude <- format(round(final_res$latitude, 1), nsmall = 1)
-    final_res$longitude <- format(round(final_res$longitude, 1), nsmall = 1)
+    final_res$latitude <- format(round(final_res$latitude, 2), nsmall = 1)
+    final_res$longitude <- format(round(final_res$longitude, 2), nsmall = 1)
   }
   if("latitude_of_the_place" %in% colnames(final_res)){ 
-    final_res$latitude_of_the_place <- format(round(final_res$latitude_of_the_place, 1), nsmall = 1)
-    final_res$longitude_of_the_place <- format(round(final_res$longitude_of_the_place, 1), nsmall = 1)
+    final_res$latitude_of_the_place <- format(round(final_res$latitude_of_the_place, 2), nsmall = 1)
+    final_res$longitude_of_the_place <- format(round(final_res$longitude_of_the_place, 2), nsmall = 1)
   }
   if("latitude_of_the_place2" %in% colnames(final_res)){ 
-    final_res$latitude_of_the_place2 <- format(round(final_res$latitude_of_the_place2, 1), nsmall = 1)
-    final_res$longitude_of_the_place2 <- format(round(final_res$longitude_of_the_place2, 1), nsmall = 1)
+    final_res$latitude_of_the_place2 <- format(round(final_res$latitude_of_the_place2, 2), nsmall = 1)
+    final_res$longitude_of_the_place2 <- format(round(final_res$longitude_of_the_place2, 2), nsmall = 1)
   }
   
-  
-  #now that we delete some columns, come rows are exactly the same, we can delete the duplicated ones
-  final_res <- unique(final_res)
+  #deleting duplicated rows
+  #as one element can have several coordinates for only one place, we delete the duplicated without looking at coordinates column.
+  col <- colnames(final_res)
+  final_res <- final_res[!duplicated(final_res[c(col[1],col[2])]),]
+  #recuperer automatiquement les 2 premieres colonnes ou 3, et appliquer la fonction
 
   return(final_res)
 }
