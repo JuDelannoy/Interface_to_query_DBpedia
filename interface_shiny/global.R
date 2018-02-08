@@ -20,10 +20,20 @@ predicates_dictionnary <- read.csv("DATA/predicates_dictionnary.csv", stringsAsF
 
 
 #querying DBpedia with the parameters given in the interface
+#SUBJECT : typeA and typeAprec,namesubject for the value
+#spatialized subject : placesubject (boolean)
+#PREDICATES : verb, verb2
+#spatialized predicate/object : placeobject (boolean)
+#1 or 2 predicates : secondpredicate (boolean, TRUE = 2 predicates)
+#OBJECTS : nameobject,nameobject2
+#exact match of the value of the object : exactobject and exactobject2 (booleans)
+#dated predicates : mindate, maxdate, mindate2, maxdate2 (value = na if not a date)
+#number of results wanted in output : nbresults
 query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,secondpredicate,verb2,
                           nameobject,exactobject,placeobject,nameobject2,exactobject2,placeobject2,
                           mindate,maxdate,mindate2,maxdate2,nbresults){
     
+  
   #endpoints and prefix to link to DB and get ontologies
   endpoint <- "http://live.dbpedia.org/sparql"
   options <- NULL
@@ -40,7 +50,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #beginning of the query
   beg <- 'SELECT distinct *
              WHERE {\n'
-  
+  ############################################################
   #subject
   q <- ""
   if (typeA !="All"){ q <- paste('?x a dbo:',typeA,' .\n',sep="")}
@@ -65,6 +75,8 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   if (typeA == "Event" || typeA=="Place"){
   q <- paste(q,'OPTIONAL{?x georss:point ?coordinates} .\n',sep="")}
   
+  
+  ##############################################################
   #PREDICATE 1
   #if one predicate is chosen
   if (verb!="no"){
@@ -117,7 +129,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     }
   }
   
-  
+  ############################################################
   #PREDICATE 2
   #if the user chosed to add a second predicate
   if ( length(verb2)!=0){
@@ -167,7 +179,8 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
 
   }}
   
- 
+  
+  ######################################################################
   #link to wikipedia
   q <- paste(q,'BIND (concat("http://wikipedia.org/wiki/",replace(?name," ","_")) as ?wikilink) .\n',sep="")
 
@@ -190,6 +203,8 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #save result as dataframe
   final_res <- as.data.frame(res)
   
+  #######################################################################
+  #subsequent calculations
   
   #split lat lon in 2 different columns
   #for subject

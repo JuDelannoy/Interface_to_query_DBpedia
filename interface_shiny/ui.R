@@ -1,7 +1,7 @@
 ui <- dashboardPage( skin = "green",
-  
+  #header
   dashboardHeader(title = "Let's query Wikipedia !"),
-  
+  #sidebar
   dashboardSidebar(
     sidebarMenu(
       menuItem("User Guide", tabName = "introduction", icon = icon("question-circle")),
@@ -9,7 +9,7 @@ ui <- dashboardPage( skin = "green",
       menuItem("Map", tabName = "map", icon = icon("globe")),
       menuItem("Further Information", tabName = "details", icon = icon("info"))
     )),
-  
+  #body
   dashboardBody(
     tabItems(
       # in dashboard panel
@@ -53,6 +53,8 @@ ui <- dashboardPage( skin = "green",
               checkboxInput(inputId = "nbpredicates",
                             label = "Add a new predicate",
                             value = FALSE),
+              
+              #2bis : predicate2 and object2
               fluidRow(conditionalPanel('input.nbpredicates == true',
                                  box(status = "warning",h4(strong("Predicate 2")),
                                      uiOutput("uipredicat2"),
@@ -63,7 +65,7 @@ ui <- dashboardPage( skin = "green",
                                      uiOutput("uirangedatemin2"),
                                      uiOutput("uirangedatemax2")))
               ),
-              #2 : details
+              #3 : details
               fluidRow(h3("Preferences")),
               fluidRow(
                 box(status = "warning",
@@ -78,7 +80,8 @@ ui <- dashboardPage( skin = "green",
             #new row : plot the table
             withSpinner(dataTableOutput("table"),color = "green")
         )),
-      # Second tab content : explanations
+      
+      # Second tab content : explanations for user
       tabItem(tabName = "introduction",
               includeCSS("style.css"),
               tags$h1("Welcome to this app ! "),
@@ -154,8 +157,11 @@ ui <- dashboardPage( skin = "green",
               "object, minimum : 1990",
               br(),
               "object, maximum : 1990",
-              br()
+              br(),
+              "or name object : 1960"
       ),
+      
+      #map for located results
       tabItem(tabName = "map",
               tags$h1("See your results on a map !"),
               withSpinner(leafletOutput("mymap",height = 475),color = "green"),
@@ -171,13 +177,16 @@ ui <- dashboardPage( skin = "green",
              br(),
              "If you have several markers for one element (Person, Organisation ..), you should select City or Country in the options."
       ),
+      
+      
+     #further information
     tabItem(tabName = "details",
             tags$h3("Potential problems"),
             tags$h2("Query without results ?"),
             tags$h4("Too precise subject"),
             "In LiveDBpedia The subject could be saved in a wrong category or less precise one. If you have selected a precise type, try with only the general type.",
             br(),
-            "For example, Will Smith, as an actor and singer, is an Artist, but Live DBpedia stored him only as a Person",
+            "For example, Will Smith, as an actor and singer, is an Artist, but Live DBpedia stored him only as a Person.",
             br(),
             "Likewise, Usain Bolt is an Athlete, but no athlete is called like that. LiveDBpedia not even stored Usain Bolt as a Person. So you can find him by chosing 'All' in subject.",
             tags$h4("Predicates not filled out"),
@@ -209,7 +218,7 @@ ui <- dashboardPage( skin = "green",
             helpText(a(href="https://github.com/JuDelannoy/Interface_to_query_DBpedia", target="_blank", "View code here")),
             br(),
             tags$h3("Contact"),
-            "You can contact me if you see issues or if you need further information:",
+            "You can contact me if you encounter issues or if you need further information:",
             tags$i(" juliette.delannoy@outlook.fr")
             )
     )

@@ -172,22 +172,63 @@ server <- function(input, output) {
   #########################################################################################################################################
     #MAP
     
-    coloredIcons <- iconList(green = makeIcon("DATA/green_marker.png", iconWidth = 32),
-                             red = makeIcon("DATA/red_marker.png", iconWidth = 32),
-                             orange = makeIcon("DATA/orange_marker.png", iconWidth = 32))
+    output$mymap <- renderLeaflet({
+      #if the subject is located
+      if (locatedsubject()){
+        plotmappreciseplace()}
+      else if (locatedobject1()){
+        #if the oject 1 and the object 2 are located
+        if(locatedobject2()){
+          plotmapobjects()}
+        #if only the object 1 is located
+        else {plotmapobject1()}
+      }
+      #if only the object 2 is located
+      else if (locatedobject2()){plotmapobject2()}
+    })
     
+
+#if a column is called latitude, then the subject is located    
 locatedsubject <- reactive(
   "latitude" %in% colnames(querying())
 )    
 
+#if a column is called latitude_of_the_place, then the object1 is located    
 locatedobject1 <- reactive(
   "latitude_of_the_place" %in% colnames(querying())
 )    
 
+#if a column is called latitude_of_the_place2, then the object2 is located   
 locatedobject2 <- reactive(
   "latitude_of_the_place2" %in% colnames(querying())
 )
 
+#plotting the map
+
+#map for located subject
+#(if the object is also located, only the subject is plot as more precise - an event is more precisely located than the country itself)
+plotmappreciseplace <- reactive(
+  if (input$predicat == "no"){
+    leaflet(data = querying()) %>% addTiles() %>%
+      addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]),
+                 popup = ~as.character(paste0(
+                   strong("Name :"),
+                   querying()[[input$typeA]])))
+  }
+  #if there are some information about the object in the table, it will be plot on the map too
+  else {
+    leaflet(data = querying()) %>% addTiles() %>%
+      addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]),
+                 popup = ~as.character(paste0(
+                   strong("Name :"),
+                   querying()[[input$typeA]],
+                   br(),
+                   strong(input$predicat),":",
+                   querying()[[input$predicat]])))
+  }
+)
+
+#map for located object1
 plotmapobject1 <- reactive(
   leaflet(data = querying()) %>% addTiles() %>%
     addMarkers(~as.numeric(longitude_of_the_place),
@@ -201,6 +242,7 @@ plotmapobject1 <- reactive(
                  querying()[[grep("place",colnames(querying()))[1]]])))
 )
 
+#map for located object2
 plotmapobject2 <- reactive(
   leaflet(data = querying()) %>% addTiles() %>%
     addMarkers(~as.numeric(longitude_of_the_place2),
@@ -214,6 +256,9 @@ plotmapobject2 <- reactive(
                  querying()[[grep("place",colnames(querying()))[1]]])))
 )
 
+#map for both located object 1 and 2
+#both are plotted, the object2 with another marker
+#on the popup you have information on both object -whatever object 1 or 2 is clicked)
 plotmapobjects <- reactive(
   leaflet(data = querying()) %>% addTiles() %>%
     addMarkers(~as.numeric(longitude_of_the_place),
@@ -244,48 +289,11 @@ plotmapobjects <- reactive(
                  
                )
 
-plotmappreciseplace <- reactive(
-  if (input$predicat == "no"){
-  leaflet(data = querying()) %>% addTiles() %>%
-    addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]),
-               popup = ~as.character(paste0(
-                 strong("Name :"),
-                 querying()[[input$typeA]])))
-  }
-  else {
-    leaflet(data = querying()) %>% addTiles() %>%
-      addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]),
-                 popup = ~as.character(paste0(
-                   strong("Name :"),
-                   querying()[[input$typeA]],
-                   br(),
-                   strong(input$predicat),":",
-                   querying()[[input$predicat]])))
-  }
-)
 
 
-output$infomap <- renderText({
-  if (locatedsubject()|locatedobject1()|locatedobject2()){
-    infomaptext()
-  }
-    
-})
+#function to choose a different marker (in case of 2 spatialized objects)
+coloredIcons <- iconList(green = makeIcon("DATA/green_marker.png", iconWidth = 32),
+                         red = makeIcon("DATA/red_marker.png", iconWidth = 32),
+                         orange = makeIcon("DATA/orange_marker.png", iconWidth = 32))
 
-
-output$mymap <- renderLeaflet({
-  #if the subject is located
-  if (locatedsubject()){
-    plotmappreciseplace()}
-  else if (locatedobject1()){
-    #if the oject 1 and the object 2 are located
-    if(locatedobject2()){
-      plotmapobjects()}
-    #if only the object 1 is located
-    else {plotmapobject1()}
-  }
-  #if only the object 2 is located
-  else if (locatedobject2()){plotmapobject2()}
-    })
-
-}
+} 
