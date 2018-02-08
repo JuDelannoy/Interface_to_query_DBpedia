@@ -20,7 +20,7 @@ predicates_dictionnary <- read.csv("DATA/predicates_dictionnary.csv", stringsAsF
 
 
 #querying DBpedia with the parameters given in the interface
-query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,verb2,
+query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,verb,secondpredicate,verb2,
                           nameobject,exactobject,placeobject,nameobject2,exactobject2,placeobject2,
                           mindate,maxdate,mindate2,maxdate2,nbresults){
     
@@ -42,7 +42,8 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
              WHERE {\n'
   
   #subject
-  q <- paste('?x a dbo:',typeA,' .\n',sep="")
+  q <- ""
+  if (typeA !="All"){ q <- paste('?x a dbo:',typeA,' .\n',sep="")}
   #precision about the type, if there is one
   if (typeAprec!="All"){q <- paste(q,'?x a dbo:',typeAprec,' .\n',sep="")}
   #getting the label of the subject, the most readable name of it
@@ -103,7 +104,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     }
     
     #if the object is a date (mindate and maxdate !=NA) ie if the subtitle predicate reference to the word "date"
-    if (grepl("date",verb)){  
+    if (grepl("date",verb)|grepl("epoch",verb)){  
       q <- paste(q,"BIND(strdt(?Object,xsd:date) AS ?date).\n",sep="")
       #user can give whether a minimum, wether a maximum, whether both of them
       if (is.na(mindate)){}else{q <- paste(q,'FILTER(?date >= "',mindate,'-01-01"^^xsd:date).\n',sep="")}
@@ -116,11 +117,13 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     }
   }
   
+  
   #PREDICATE 2
   #if the user chosed to add a second predicate
   if ( length(verb2)!=0){
-  #if this predicate has a value
-  if (verb2!="no"){
+  #if the box for second predicate is checked (otherwise, even if verb2 has a value, it should not be verb2 = input$predicat2,)
+    if (secondpredicate ==TRUE){
+  #if (verb2!="no"){
     #get the line of the predicate in the dictionary
     verbPosition2 <- which(verb2 == predicates_dictionnary$subtitle)
     #predicate can be direct or not
@@ -150,7 +153,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     }
     
     #if the object2 is a date (mindate and maxdate !=NA)
-    if (grepl("date",verb2)){  
+    if (grepl("date",verb2)|grepl("epoch",verb2)){  
       q <- paste(q,"BIND(strdt(?Object2,xsd:date) AS ?datebis).\n",sep="")
       #min, max, both of them or neither of them
       if (is.na(mindate2)){}else{q <- paste(q,'FILTER(?datebis >= "',mindate2,'-01-01"^^xsd:date).\n',sep="")}
@@ -210,10 +213,12 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     latlon <- reshape2::colsplit(final_res[[placecolumn]], " ",c("latitude_of_the_place2","longitude_of_the_place2"))
     final_res <- cbind(final_res,latlon)
   }
-
+  
+  #if there are some results in the table
+  if (nrow(final_res)!=0){
   #setting to NULL useless columns
-  final_res$x <- NULL
-  final_res$name <- NULL
+  if("x" %in% colnames(final_res)){final_res$x <- NULL}
+  if("name" %in% colnames(final_res)){final_res$name <- NULL}
   if("z" %in% colnames(final_res)){final_res$z <- NULL}
   if("nameobjectURI" %in% colnames(final_res)){final_res$nameobjectURI <- NULL}
   if("px" %in% colnames(final_res)){final_res$px <- NULL}
@@ -255,8 +260,13 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #as one element can have several coordinates for only one place, we delete the duplicated without looking at coordinates column.
   col <- colnames(final_res)
   final_res <- final_res[!duplicated(final_res[c(col[1],col[2])]),]
-  #recuperer automatiquement les 2 premieres colonnes ou 3, et appliquer la fonction
 
+  #encoding the dataframe in UTF-8
+  for (col in colnames(final_res)){
+  Encoding(final_res[[col]]) <- "UTF-8"}
+  
+  }
+  
   return(final_res)
 }
 

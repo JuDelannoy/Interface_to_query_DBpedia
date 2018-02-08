@@ -60,12 +60,12 @@ server <- function(input, output) {
   
   output$uirangedatemin <- renderUI({rangedatemin()})
   
-  rangedatemin <- reactive({switch(grepl("date",input$predicat),
+  rangedatemin <- reactive({switch(grepl("date",input$predicat)|grepl("epoch",input$predicat),
                                    "TRUE" = numericInput("rangedatemin", label = h4("minimum date (yyyy)"), value = "yyyy", min = NA, max = NA, step = NA,
                                                          width = NULL))})
   output$uirangedatemax <- renderUI({rangedatemax()})
   
-  rangedatemax <- reactive({switch(grepl("date",input$predicat),
+  rangedatemax <- reactive({switch(grepl("date",input$predicat)|grepl("epoch",input$predicat),
                                    "TRUE" = numericInput("rangedatemax", label = h4("maximum date (yyyy)"), value = "yyyy", min = NA, max = NA, step = NA,
                                                          width = NULL))})
   
@@ -116,14 +116,14 @@ server <- function(input, output) {
   #RANGE DATE for temporal predicates
   output$uirangedatemin2 <- renderUI({rangedatemin2()})
   
-  rangedatemin2 <- reactive({switch(grepl("date",input$predicat2),
+  rangedatemin2 <- reactive({switch(grepl("date",input$predicat2)|grepl("epoch",input$predicat2),
                                    "TRUE" = numericInput("rangedatemin2", label = h4("minimum date (yyyy)"), value = "yyyy", min = NA, max = NA, step = NA,
                                                          width = NULL))})
   
 
   output$uirangedatemax2 <- renderUI({rangedatemax2()})
   
-  rangedatemax2 <- reactive({switch(grepl("date",input$predicat2),
+  rangedatemax2 <- reactive({switch(grepl("date",input$predicat2)|grepl("epoch",input$predicat2),
                                    "TRUE" = numericInput("rangedatemax2", label = h4("maximum date (yyyy)"), value = "yyyy", min = NA, max = NA, step = NA,
                                                          width = NULL))})
   
@@ -141,6 +141,7 @@ server <- function(input, output) {
                                                             namesubject=input$nameSubject,
                                                             exactsubject = input$exactsubject,
                                                             verb = input$predicat,
+                                                            secondpredicate = input$nbpredicates,
                                                             verb2 = input$predicat2,
                                                             nameobject = input$nameObject,
                                                             exactobject = input$exactobject,
@@ -244,8 +245,23 @@ plotmapobjects <- reactive(
                )
 
 plotmappreciseplace <- reactive(
+  if (input$predicat == "no"){
   leaflet(data = querying()) %>% addTiles() %>%
-    addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]))
+    addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]),
+               popup = ~as.character(paste0(
+                 strong("Name :"),
+                 querying()[[input$typeA]])))
+  }
+  else {
+    leaflet(data = querying()) %>% addTiles() %>%
+      addMarkers(~as.numeric(longitude), ~as.numeric(latitude),label = ~as.character(querying()[[input$typeA]]),
+                 popup = ~as.character(paste0(
+                   strong("Name :"),
+                   querying()[[input$typeA]],
+                   br(),
+                   strong(input$predicat),":",
+                   querying()[[input$predicat]])))
+  }
 )
 
 
