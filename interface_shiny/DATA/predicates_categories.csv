@@ -1,25 +1,77 @@
-Person;Writer;Politician;Artist;Athlete;Place;PopulatedPlace;NaturalPlace;ArchitecturalStructure;CelestialBody;Species;Work;WrittenWork;MusicalWork;Film;Artwork;Activity;Game;Sport;Organisation;Company;EducationalInstitution;SportsTeam;SportsLeague;Group;FictionalCharacter;Event
-no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no
-birth name;birth name;birth name;birth name;birth name;type of place;type of place;type of place;type of place;gravity;family;author;author;author;author;author;necessary skills;necessary skills;contact between players;country;country;country;country;country;term start;creator;place
-birth place;birth place;birth place;birth place;birth place;place, localisation;place, localisation;place, localisation;place, localisation;period;;release date;release date;release date;release date;release date;minimum number of players;minimum number of players;sport equipment needed;founding year;founding year;city;founding year;founding year;term end;country;date
-birth date;birth date;birth date;birth date;birth date;population;population;population;is birth Place of;radius;;owner;owner;country;country;owner;playing time for the game;playing time for the game;playing region;chairman;city;founded by;chairman;;associated Band or Artist;;
-death place;death place;death place;death place;death place;is birth Place of;is birth Place of;is birth Place of;is Part of;constellation;;country;country;writer;writer;;game minimum age;game minimum age;type of sport;sport league;type of organisation;type of organisation;sport league;;members of the band;;
-death date;death date;death date;death date;death date;is Part of;is Part of;is Part of;total area (km²);temperature;;writer;writer;language;language;;part of random chance;part of random chance;category of sport;is the team of;;is the team of;;;style, genre;;
-nationality;nationality;nationality;nationality;nationality;is the city of;is the city of;total area (km²);;absolute magnitude;;language;language;director;director;;game complexity;game complexity;is the activity of;manager;;;manager;;record label;;
-spouse;spouse;spouse;spouse;spouse;total area (km²);total area (km²);;;apparent magnitude;;director;style, genre;record label;starring;;contact between players;is the activity of;;city;;;city;;;;
-children;children;children;children;children;;;;;;;starring;publisher;album;producer;;sport equipment needed;;;founded by;;;;;;;
-parents;parents;parents;parents;parents;;;;;;;producer;;style, genre;;;playing region;;;type of organisation;;;;;;;
-type of job;title;term start;type of job;type of job;;;;;;;record label;;;;;type of sport;;;term start;;;;;;;
-team;greatest epoch;term end;title;team;;;;;;;album;;;;;category of sport;;;term end;;;;;;;
-term start;is author of;party;greatest epoch;term start;;;;;;;style, genre;;;;;is the activity of;;;associated Band or Artist;;;;;;;
-term end;style, genre;successor;starred in;term end;;;;;;;publisher;;;;;;;;members of the band;;;;;;;
-party;has influenced;predecessor;is author of;title;;;;;;;;;;;;;;;style, genre;;;;;;;
-successor;was influenced by;title;style, genre;greatest epoch;;;;;;;;;;;;;;;record label;;;;;;;
-predecessor;;greatest epoch;has influenced;was influenced by;;;;;;;;;;;;;;;;;;;;;;
-title;;is author of;was influenced by;;;;;;;;;;;;;;;;;;;;;;;
-greatest epoch;;has influenced;;;;;;;;;;;;;;;;;;;;;;;;
-starred in;;was influenced by;;;;;;;;;;;;;;;;;;;;;;;;
-is author of;;;;;;;;;;;;;;;;;;;;;;;;;;
-style, genre;;;;;;;;;;;;;;;;;;;;;;;;;;
-has influenced;;;;;;;;;;;;;;;;;;;;;;;;;;
-was influenced by;;;;;;;;;;;;;;;;;;;;;;;;;;
+Person;Writer;Politician;Artist;Athlete;Place;PopulatedPlace;NaturalPlace;ArchitecturalStructure;CelestialBody;Species;Work;WrittenWork;MusicalWork;Film;Artwork;Activity;Game;Sport;Organisation;Company;EducationalInstitution;SportsTeam;SportsLeague;Group;FictionalCharacter;Event;All
+no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no;no
+birth name;birth name;birth name;birth name;birth name;type of place;type of place;type of place;type of place;gravity;family;author;author;author;author;author;necessary skills;necessary skills;contact between players;country;country;country;country;country;term start;creator;place;birth name
+birth place;birth place;birth place;birth place;birth place;place, localisation;place, localisation;place, localisation;place, localisation;period;;release date;release date;release date;release date;release date;minimum number of players;minimum number of players;sport equipment needed;founding year;founding year;city;founding year;founding year;term end;country;date;birth place
+birth date;birth date;birth date;birth date;birth date;population;population;population;is birth Place of;radius;;owner;owner;country;country;owner;playing time for the game;playing time for the game;playing region;chairman;city;founded by;chairman;;associated Band or Artist;;;birth date
+death place;death place;death place;death place;death place;is birth Place of;is birth Place of;is birth Place of;is Part of;constellation;;country;country;writer;writer;;game minimum age;game minimum age;type of sport;sport league;type of organisation;type of organisation;sport league;;members of the band;;;death place
+death date;death date;death date;death date;death date;is Part of;is Part of;is Part of;total area (km²);temperature;;writer;writer;language;language;;part of random chance;part of random chance;category of sport;is the team of;;is the team of;;;style, genre;;;death date
+nationality;nationality;nationality;nationality;nationality;is the city of;is the city of;total area (km²);;absolute magnitude;;language;language;director;director;;game complexity;game complexity;is the activity of;manager;;;manager;;record label;;;nationality
+spouse;spouse;spouse;spouse;spouse;total area (km²);total area (km²);;;apparent magnitude;;director;style, genre;record label;starring;;contact between players;is the activity of;;city;;;city;;;;;spouse
+children;children;children;children;children;;;;;;;starring;publisher;album;producer;;sport equipment needed;;;founded by;;;;;;;;children
+parents;parents;parents;parents;parents;;;;;;;producer;;style, genre;;;playing region;;;type of organisation;;;;;;;;parents
+type of job;title;term start;type of job;type of job;;;;;;;record label;;;;;type of sport;;;term start;;;;;;;;type of job
+team;greatest epoch;term end;title;team;;;;;;;album;;;;;category of sport;;;term end;;;;;;;;team
+term start;is author of;party;greatest epoch;term start;;;;;;;style, genre;;;;;is the activity of;;;associated Band or Artist;;;;;;;;term start
+term end;style, genre;successor;starred in;term end;;;;;;;publisher;;;;;;;;members of the band;;;;;;;;term end
+party;has influenced;predecessor;is author of;title;;;;;;;;;;;;;;;style, genre;;;;;;;;party
+successor;was influenced by;title;style, genre;greatest epoch;;;;;;;;;;;;;;;record label;;;;;;;;successor
+predecessor;;greatest epoch;has influenced;was influenced by;;;;;;;;;;;;;;;;;;;;;;;predecessor
+title;;is author of;was influenced by;;;;;;;;;;;;;;;;;;;;;;;;title
+greatest epoch;;has influenced;;;;;;;;;;;;;;;;;;;;;;;;;greatest epoch
+starred in;;was influenced by;;;;;;;;;;;;;;;;;;;;;;;;;starred in
+is author of;;;;;;;;;;;;;;;;;;;;;;;;;;;is author of
+style, genre;;;;;;;;;;;;;;;;;;;;;;;;;;;style, genre
+has influenced;;;;;;;;;;;;;;;;;;;;;;;;;;;has influenced
+was influenced by;;;;;;;;;;;;;;;;;;;;;;;;;;;was influenced by
+;;;;;;;;;;;;;;;;;;;;;;;;;;;type of place
+;;;;;;;;;;;;;;;;;;;;;;;;;;;place, localisation
+;;;;;;;;;;;;;;;;;;;;;;;;;;;population
+;;;;;;;;;;;;;;;;;;;;;;;;;;;is birth Place of
+;;;;;;;;;;;;;;;;;;;;;;;;;;;is Part of
+;;;;;;;;;;;;;;;;;;;;;;;;;;;is the city of
+;;;;;;;;;;;;;;;;;;;;;;;;;;;total area (km²)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;gravity
+;;;;;;;;;;;;;;;;;;;;;;;;;;;period
+;;;;;;;;;;;;;;;;;;;;;;;;;;;radius
+;;;;;;;;;;;;;;;;;;;;;;;;;;;constellation
+;;;;;;;;;;;;;;;;;;;;;;;;;;;temperature
+;;;;;;;;;;;;;;;;;;;;;;;;;;;absolute magnitude
+;;;;;;;;;;;;;;;;;;;;;;;;;;;apparent magnitude
+;;;;;;;;;;;;;;;;;;;;;;;;;;;family
+;;;;;;;;;;;;;;;;;;;;;;;;;;;author
+;;;;;;;;;;;;;;;;;;;;;;;;;;;release date
+;;;;;;;;;;;;;;;;;;;;;;;;;;;owner
+;;;;;;;;;;;;;;;;;;;;;;;;;;;country
+;;;;;;;;;;;;;;;;;;;;;;;;;;;writer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;language
+;;;;;;;;;;;;;;;;;;;;;;;;;;;director
+;;;;;;;;;;;;;;;;;;;;;;;;;;;starring
+;;;;;;;;;;;;;;;;;;;;;;;;;;;producer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;record label
+;;;;;;;;;;;;;;;;;;;;;;;;;;;album
+;;;;;;;;;;;;;;;;;;;;;;;;;;;publisher
+;;;;;;;;;;;;;;;;;;;;;;;;;;;necessary skills
+;;;;;;;;;;;;;;;;;;;;;;;;;;;minimum number of players
+;;;;;;;;;;;;;;;;;;;;;;;;;;;playing time for the game
+;;;;;;;;;;;;;;;;;;;;;;;;;;;game minimum age
+;;;;;;;;;;;;;;;;;;;;;;;;;;;part of random chance
+;;;;;;;;;;;;;;;;;;;;;;;;;;;game complexity
+;;;;;;;;;;;;;;;;;;;;;;;;;;;contact between players
+;;;;;;;;;;;;;;;;;;;;;;;;;;;sport equipment needed
+;;;;;;;;;;;;;;;;;;;;;;;;;;;playing region
+;;;;;;;;;;;;;;;;;;;;;;;;;;;type of sport
+;;;;;;;;;;;;;;;;;;;;;;;;;;;category of sport
+;;;;;;;;;;;;;;;;;;;;;;;;;;;is the activity of
+;;;;;;;;;;;;;;;;;;;;;;;;;;;founding year
+;;;;;;;;;;;;;;;;;;;;;;;;;;;chairman
+;;;;;;;;;;;;;;;;;;;;;;;;;;;sport league
+;;;;;;;;;;;;;;;;;;;;;;;;;;;is the team of
+;;;;;;;;;;;;;;;;;;;;;;;;;;;manager
+;;;;;;;;;;;;;;;;;;;;;;;;;;;city
+;;;;;;;;;;;;;;;;;;;;;;;;;;;founded by
+;;;;;;;;;;;;;;;;;;;;;;;;;;;type of organisation
+;;;;;;;;;;;;;;;;;;;;;;;;;;;associated Band or Artist
+;;;;;;;;;;;;;;;;;;;;;;;;;;;members of the band
+;;;;;;;;;;;;;;;;;;;;;;;;;;;creator
+;;;;;;;;;;;;;;;;;;;;;;;;;;;place
+;;;;;;;;;;;;;;;;;;;;;;;;;;;date

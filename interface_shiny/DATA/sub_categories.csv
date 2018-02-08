@@ -1,7 +1,7 @@
-Activity;Organisation;FictionalCharacter;Person;Event;Place;CelestialBody;Species;Work
-All;All;All;All;All;All;All;All;All
-Game;Company;;Athlete;;ArchitecturalStructure;;;Artwork
-Sport;EducationalInstitution;;Artist;;NaturalPlace;;;Film
-;Group;;Politician;;PopulatedPlace;;;MusicalWork
-;SportsLeague;;Writer;;;;;WrittenWork
-;SportsTeam;;;;;;;
+Activity;Organisation;FictionalCharacter;Person;Event;Place;CelestialBody;Species;Work;All
+All;All;All;All;All;All;All;All;All;All
+Game;Company;;Athlete;;ArchitecturalStructure;;;Artwork;
+Sport;EducationalInstitution;;Artist;;NaturalPlace;;;Film;
+;Group;;Politician;;PopulatedPlace;;;MusicalWork;
+;SportsLeague;;Writer;;;;;WrittenWork;
+;SportsTeam;;;;;;;;
