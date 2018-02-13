@@ -84,7 +84,7 @@ ui <- dashboardPage( skin = "green",
       # Second tab content : explanations for user
       tabItem(tabName = "introduction",
               includeCSS("style.css"),
-              tags$h1("Welcome to this app ! "),
+              tags$h1("Welcome to baby Deep Thought ! "),
                 tags$h3("What is it for ?"),
                 br(),
               "Most people search on Wikipedia when they need an information about a person, an event, a place or whatever.",

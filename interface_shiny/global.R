@@ -99,10 +99,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     #add the coordinates if the object is a place
     #CHANGE POSSIBLE HERE if take only column place ==TRUE
     if (predicates_dictionnary$place[verbPosition]){
-    #for the URI objects
     q <- paste(q,'OPTIONAL{?z georss:point ?place} .\n',sep="")
-    #for the non URI objects
-    q <- paste(q,'OPTIONAL{?px a dbo:Place .\n ?px rdfs:label ?z .\n ?px georss:point ?place} .\n',sep="")
     }
     
     
@@ -133,8 +130,8 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   #PREDICATE 2
   #if the user chosed to add a second predicate
   if ( length(verb2)!=0){
-  #if the box for second predicate is checked (otherwise, even if verb2 has a value, it should not be verb2 = input$predicat2,)
-    if (secondpredicate ==TRUE){
+  #if the box for second predicate is checked (otherwise, even if verb2 has a value, it should not be)
+    if (secondpredicate ==TRUE & verb2 !="no"){
   #if (verb2!="no"){
     #get the line of the predicate in the dictionary
     verbPosition2 <- which(verb2 == predicates_dictionnary$subtitle)
@@ -150,10 +147,7 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
     q <- paste(q,'BIND (COALESCE(STR(?nameobjectURIbis),str(?zbis)) as ?Object2) .\n',sep="")
     
     #add the coordinates if the object is a place
-    #for the URI objects
     q <- paste(q,'OPTIONAL{?zbis georss:point ?place2} .\n',sep="")
-    #for the non URI objects (needs to search for the URI)
-    q <- paste(q,'OPTIONAL{?pxbis a dbo:Place .\n ?pxbis rdfs:label ?zbis .\n ?pxbis georss:point ?place2} .\n',sep="")
 
     #filter on the name given by the user, if he gives one
     if (nameobject2!="optionnal" & nameobject2!=""){
@@ -236,11 +230,9 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   if("name" %in% colnames(final_res)){final_res$name <- NULL}
   if("z" %in% colnames(final_res)){final_res$z <- NULL}
   if("nameobjectURI" %in% colnames(final_res)){final_res$nameobjectURI <- NULL}
-  if("px" %in% colnames(final_res)){final_res$px <- NULL}
   if("date" %in% colnames(final_res)){final_res$date <- NULL}
   if("zbis" %in% colnames(final_res)){final_res$zbis <- NULL}
   if("nameobjectURIbis" %in% colnames(final_res)){final_res$nameobjectURIbis <- NULL}
-  if("pxbis" %in% colnames(final_res)){final_res$pxbis <- NULL}
   if("datebis" %in% colnames(final_res)){final_res$datebis <- NULL}
   if("coordinates" %in% colnames(final_res)){final_res$coordinates <- NULL}
   if("place" %in% colnames(final_res)){final_res$place <- NULL}
