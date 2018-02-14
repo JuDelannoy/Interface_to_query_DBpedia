@@ -70,7 +70,7 @@ ui <- dashboardPage( skin = "green",
               fluidRow(
                 box(status = "warning",
                   title = "Results",
-                  sliderInput("slider", h4("Number of results"), min=0, max=10000, value=100,step = 100)
+                  sliderInput("slider", h4("Number of results"), min=0, max=3000, value=100,step = 100)
                 ),
                 actionButton("goButton", h4("Go!"),width = '30%',icon = icon("paper-plane")),
                 # Export button
@@ -117,7 +117,7 @@ ui <- dashboardPage( skin = "green",
                 ),
               tags$h3("How does it work?"),
               br(),
-              "Few years ago, Wikipedia team has started to store all the data of the website in a database called DBpedia.",
+              "Few years ago, a project was created to store Wikipedia data in a database called DBpedia.",
               br(),
               "Anyone can query it to have any kind of information available, but you need to learn the SPARQL language (see Further Information for more information).",
               br(),

@@ -183,8 +183,13 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   all_query <- paste(beg,
             q,
             '}
-            LIMIT ',nbresults,
+            LIMIT ',nbresults*3,
              sep="")
+  
+  
+  ########################################################################
+  #getting the results
+  
   
   #print the query in the console
   cat(file=stderr(), "The query is", all_query, "for",typeA,typeAprec,namesubject,verb,"\n")
@@ -274,7 +279,10 @@ query_DBpedia <- function(typeA,typeAprec,placesubject,namesubject,exactsubject,
   
   }
   
-  return(final_res)
+  nblines <- nbresults
+  if (NROW(final_res)<nbresults){nblines <- NROW(final_res) }
+  
+  return(final_res[1:nblines,])
 }
 
 
