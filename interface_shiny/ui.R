@@ -51,7 +51,7 @@ ui <- dashboardPage( skin = "green",
                 
                 ),
               checkboxInput(inputId = "nbpredicates",
-                            label = "Add a new predicate",
+                            label = strong("Add a new predicate"),
                             value = FALSE),
               
               #2bis : predicate2 and object2
