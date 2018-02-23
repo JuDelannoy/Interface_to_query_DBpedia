@@ -1,7 +1,10 @@
 # Interface_to_query_DBpedia
 This is a R interface which allows you to query DBpedia with most of common queries. There are also explanation about the Web semantic.
 
-The R code that you have to use are in "interface_shiny".
-With this folder, you will be able to use the interface.
+If you want to use the dashboard, download the "interface_shiny" folder and execute it with R.
 
-The report about the project, in french, is located in "RENDU".
+In the "RENDU" folder you will find, in french :
+- the slides I used during my audience, at the end of the project (presentationDBpedia.pdf)
+- the report I wrote about the project (rapport_DELANNOY_DBPEDIA.pdf)
+- my explanation of semantic web with all the sources I used during the project (web_semantique.pdf)
+
